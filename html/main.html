@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<!-- using srcipt with showdown js-->
+<head>
+    <title>MarkDown to Html</title>
+    <script type="text/javascript" src="../lib/showdown/dist/showdown.min.js"></script>
+</head>
+<!--style for the page-->
+<style>
+    body {
+      font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+     font-size: 16px;
+      line-height: 1.42857143;
+      color: #333;
+      background-color: #fff;
+    }
+    ul li {
+        line-height: 24px;
+    }
+    blockquote {
+        border-left:#eee solid 5px;
+        padding-left:20px;
+    }
+    code {
+        color:#D34B62;
+        background: #F9F2F4;
+    }
+</style>
+<!-- 
+    A. text area for you to text in
+    B. div area for show msg
+-->
+<body>
+<div>
+    <div>
+    <textarea id="content" style="height:400px;width:600px;" onkeyup="compile()"></textarea>
+    </div>
+    <div id="result"></div>
+
+</div>
+<script type="text/javascript">
+function compile(){
+    var text = document.getElementById("content").value;
+    var converter = new showdown.Converter();
+    var html = converter.makeHtml(text);
+    document.getElementById("result").innerHTML = html;
+}
+function jsReadFiles(file) {
+    if (file.length) {
+        var f = file[0];
+        var reader = new FileReader();
+        // test a file if is the type of "md"
+        if (/md+/.test(f.type)) {
+            reader.onload = function() {
+                $('body').append('<pre>' + this.result + '</pre>');
+            }
+            reader.readAsText(f);
+        }
+    }
+}
+</script>
+</body>
+</html>
