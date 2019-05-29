@@ -1,3 +1,42 @@
+<!DOCTYPE html>
 <html>
-仅测试，后续补充 05/26 2019
+<!-- using srcipt with showdown js-->
+<head>
+    <title>INTRODUCTION</title>
+    <script type="text/javascript" src="../lib/showdown/dist/showdown.min.js"></script>
+</head>
+
+<body>
+<div>
+    <div>仅测试 后续补充；<br>当前时间：</div>
+    <div id="div_id_main"></div>
+</div>
+<script type="text/javascript">
+
+function fnW(str){
+    var num;
+    str>10 ? (num=str) : (num = "0"+str);
+    return num;
+} 
+
+function jsGetDate(){
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth();
+    var data = date.getDate();
+    var hours = date.getHours();
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
+    var time = year+"-"+fnW((month+1))+"-"+fnW(data)+" "+fnW(hours)+":"+fnW(minute)+":"+fnW(second);
+    document.getElementById("div_id_main").innerHTML = time;
+}
+
+window.onload = function(){
+    //call jsGetDate /1s
+    setInterval(function(){
+        jsGetDate();
+    },1000);
+}
+</script>
+</body>
 </html>
