@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<!-- using srcipt with showdown js-->
+<head>
+    <title>Linux Articals</title>
+    <script type="text/javascript" src="../lib/showdown/dist/showdown.min.js"></script>
+</head>
+<!--style for the page-->
+<style>
+    body {
+      font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+     font-size: 16px;
+      line-height: 1.42857143;
+      color: #333;
+      background-color: #fff;
+    }
+    ul li {
+        line-height: 24px;
+    }
+    blockquote {
+        border-left:#eee solid 5px;
+        padding-left:20px;
+    }
+    code {
+        color:#D34B62;
+        background: #F9F2F4;
+    }
+</style>
+<!-- 
+    A. text area for you to text in
+    B. div area for show msg
+-->
+<body>
+<div>
+    <div id="div_id_main"></div>
+</div>
+
+<script type="text/javascript">
+
+/*
+* demo for using showdown to convert md to html
+
+    <div>
+    <textarea id="textarea_id_main" style="height:400px;width:600px;" onkeyup="compile()"></textarea>
+    </div>
+*/
+function compile(){
+    var text = document.getElementById("textarea_id_main").value;
+    var converter = new showdown.Converter();
+    var html = converter.makeHtml(text);
+    document.getElementById("div_id_main").innerHTML = html;
+}
+/* 
+ * read doc from func() with "showdown"
+*/
+function readTextAndShow(){
+    var converter = new showdown.Converter();
+    var html = converter.makeHtml("# Name");
+    return html
+}
+
+function loadXMLDocUsingAjx()
+{
+	var xmlhttp;
+	if(window.XMLHttpRequest)
+	{//  IE7+, Firefox, Chrome, Opera, Safari 
+		xmlhttp=new XMLHttpRequest();
+	}else
+	{// IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			document.getElementById("div_id_main").innerHTML=xmlhttp.responseText;
+		}
+	}
+	xmlhttp.open("GET","/articals/linux/test.txt", true);
+	xmlhttp.send();
+}
+
+document.getElementById("div_id_main").innerHTML = loadXMLDocUsingAjx();
+
+</script>
+</body>
+</html>
