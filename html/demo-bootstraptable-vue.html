@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Home</title>
+    
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+        
+    <link href="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table-vue.min.js"></script>
+
+    <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/fontawesome.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/brands.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/solid.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <!--
+                    <table id="menu_table" class="table table-hover"></table>
+                -->    
+                <div id="menu_table">
+                    <bootstrap-table :columns="columns" :data="data" :options="options"></bootstrap-table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+  $(function() {
+    new Vue({
+      el: '#menu_table',
+      components: {
+        'BootstrapTable': BootstrapTable
+      },
+      data: {
+        columns: [{
+            title: "",
+            field: "check", 
+            align: "center", 
+            checkbox: true,
+            formatter: function(value, row, index){
+                return (value)?{
+                    disabled : true,    //checkbox visable or not
+                    checked : true      //checkbox choosed or not
+                }:{
+                    disabled : true,  
+                    checked : false
+                };
+            }
+        },{
+            title: 'ID',
+            field: 'id',
+            align: "center", 
+            visable: true
+        },{
+            title: 'Menu',
+            field: 'menu', 
+            align: "center"
+        },{
+            title: 'Command',
+            field: 'cmd',
+            align: "left", 
+            cellStyle: function(value, row, index){
+                return {
+                    css: {
+                        "white-space": "nowrap",
+                        "text-overflow": "ellipsis",
+                        "overflow": "hidden",
+                        "max-width": "60px"
+                    }
+                }
+            },
+            formatter: function (value, row, index) {
+                //var html = "";
+                //html += '<button onclick="updDevice()">Edit</button>'
+                var span = document.createElement("span");
+                span.setAttribute("title", value);
+                span.innerHTML = value;
+                //return html+" "+span.outerHTML;
+                return span.outerHTML;
+            }
+        },{
+            title: 'Test Start Time',
+            field: 'time-start-reality',
+            align: "center", 
+            formatter: function(value, row, index){
+                var date = new Date();
+                date.setTime(value);
+                var month = date.getMonth() + 1;
+                var hours = date.getHours();
+                if(hours < 10)
+                    hours = "0" + hours;
+                var minutes = date.getMinutes();
+                if(minutes < 10)
+                    minutes = "0" + minutes;
+                var time = date.getFullYear() + "-" + month + "-" + date.getDate() +
+                    " " + hours + ":" + minutes;
+                return time;
+            },
+        }, {
+            title: 'Test Status',
+            field: 'status',
+            align: 'center',
+            formatter: function (value, row, index) {
+                icon = ""
+                console.log(value);
+                if(row["check"]){
+                    switch(value){
+                        case 1:{//failed
+                            icon = "<i class='fas fa-times fa-lg'></i>";
+                            break;
+                        }
+                        case 0:{ //pass
+                            icon = "<i class='fas fa-check fa-mg'></i>";
+                            break;
+                        }
+                        default:{
+                            icon = "<i class='fas fa-question fa-mg'></i>";
+                            break;
+                        }
+                    }
+                }else{
+                    icon = "<i class='fas fa-lock fa-mg'></i>";
+                }
+                return icon;
+            },
+            events: {
+              'click .like': function (e, value, row) {
+                alert(JSON.stringify(row))
+              }
+            }
+        }],
+        data: [
+            {"menu":"A", "id":0, "check": true, "status":1, "output":"", "time-start-reality":1572513935374, "time-end-reality":0, "time-end-prospect":0, "cmd":"pwd"},
+            {"menu":"A", "id":1, "check":false, "status":0, "output":"", "time-start-reality":0, "time-end-reality":0, "time-end-prospect":0, "cmd":"ibstatus"},
+            {"menu":"A", "id":2, "check":true, "status":0, "output":"", "time-start-reality":0, "time-end-reality":0, "time-end-prospect":0, "cmd":"mst status -v"},
+            {"menu":"B", "id":3, "check":false, "status":0, "output":"", "time-start-reality":0, "time-end-reality":0, "time-end-prospect":0, "cmd":"diag -d prghw -p fpga -t version"},
+            {"menu":"B", "id":4, "check":false, "status":0, "output":"", "time-start-reality":0, "time-end-reality":0, "time-end-prospect":0, "cmd":"stressDiagListAdd 'CPU Core' 1"},
+            {"menu":"B", "id":5, "check":false, "status":0, "output":"", "time-start-reality":0, "time-end-reality":0, "time-end-prospect":0, "cmd":"diag -d prghw -p fpga -t version"},
+            {"menu":"B", "id":6, "check":true, "status":0, "output":"", "time-start-reality":0, "time-end-reality":0, "time-end-prospect":0, "cmd":"stressDiagListShow"}
+        ],
+        options: {
+            icons:{
+                paginationSwitchDown: 'fas fa-caret-square-down',
+                paginationSwitchUp: 'fas fa-caret-square-up',
+                refresh: 'fas fa-sync',
+                toggleOff: 'fas fa-toggle-off',
+                toggleOn: 'fas fa-toggle-on',
+                columns: 'fas fa-th-list',
+                fullscreen: 'fas fa-arrows-alt',
+                detailOpen: 'fas fa-plus',
+                detailClose: 'fas fa-minus'
+            },
+            search: true,
+            showColumns: true,
+            showRefresh : true,
+            striped: true,                      // display interval line color or not                  
+            pagination: true,                   // display split page or not
+            sidePagination: 'client',           // server: split page in server| client: split page in client
+            pageNumber: 1,                      // init first page for loading
+            pageSize: 5,                        // recoder pages in a singal page
+            pageList: [5, 50, 100],
+            showFooter: true,
+            showToggle: true,
+            showPaginationSwitch: true,
+            showFullscreen: true
+        }
+      }
+    })
+  })
+</script>
+
+<style>
+    /*table title background color*/
+    #menu_table  thead{
+        background: #5488c4;
+    }
+
+    /*this make a diff color between two table lines*/
+    #menu_table tr:nth-child(even){
+        background:#f4f8fb;
+    }
+</style>
+<style>
+    /*
+    i.fas, i.fab {
+        border: 1px solid black;
+    }
+    */
+    
+    .fa-times{
+        color: red;
+    }
+    .fa-question{
+        color: red;
+    }
+    .fa-check {
+        color: green;
+    }
+    .fa-lock{
+        color: gray;
+    }
+</style>
+</body>
+</html>
