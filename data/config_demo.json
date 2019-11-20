@@ -1,0 +1,9 @@
+[
+    {"menu":"A", "id":0, "check": true, "status":1, "output":"", "time-start-reality":1572513935374, "time-end-reality":0, "time-end-prospect":0, "cmd":"pwd"},
+    {"menu":"A", "id":1, "check":false, "status":0, "output":"", "time-start-reality":0, "time-end-reality":0, "time-end-prospect":0, "cmd":"ibstatus"},
+    {"menu":"A", "id":2, "check":true, "status":0, "output":"", "time-start-reality":0, "time-end-reality":0, "time-end-prospect":0, "cmd":"mst status -v"},
+    {"menu":"B", "id":3, "check":false, "status":0, "output":"", "time-start-reality":0, "time-end-reality":0, "time-end-prospect":0, "cmd":"diag -d prghw -p fpga -t version"},
+    {"menu":"B", "id":4, "check":false, "status":0, "output":"", "time-start-reality":0, "time-end-reality":0, "time-end-prospect":0, "cmd":"stressDiagListAdd 'CPU Core' 1"},
+    {"menu":"B", "id":5, "check":false, "status":0, "output":"", "time-start-reality":0, "time-end-reality":0, "time-end-prospect":0, "cmd":"diag -d prghw -p fpga -t version"},
+    {"menu":"B", "id":6, "check":false, "status":0, "output":"", "time-start-reality":0, "time-end-reality":0, "time-end-prospect":0, "cmd":"stressDiagListShow"}
+]

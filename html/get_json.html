@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Get json data</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    
+    <style>
+    table{
+		border-collapse:collapse;
+        width: 100%;
+		
+        text-align: center;
+    }
+	td,th{
+		  border: 1px solid black;
+	}
+    </style>
+</head>
+<body>
+    <button>Get JSON Data From Another Domain</button>
+    <div></div>
+    <p id="demo"></p>
+    <p><a href="../config/config_demo.json" target="_blank">click to read json demo txt</a></p>
+    
+    <input type="checkbox" /> 
+    <div><input type="file" id="files"/></div>
+    <script>
+        //循环创建div,可以在这修改样式;但是position:absolute不可修改;
+        for(var i=0;i<30;i++){
+            $("<div></div>").appendTo("body").css("backgroundColor","blue").css("position","absolute")
+            .width(100).height(100).mousedown(drag);
+        }
+        //拖拽函数
+        function drag(e){
+            var point={x:e.offsetX,y:e.offsetY};
+            var div=$(this);
+            $(this).one("mouseup",function(e){
+                $(document).off("mousemove");
+            });
+            $(document).mousemove(function(e){
+                div.css({
+                    left:e.clientX-point.x+"px",
+                    top:e.clientY-point.y+"px"
+                })
+            })
+        }
+    </script>
+
+    <!--
+    <script>
+        //get url  
+        var strPath = window.document.location.pathname;   
+        var postPath = strPath.substring(0, strPath.substr(1).indexOf('/') + 1);  
+        var url="http://"+window.location.host+postPath+"/";  
+        var stat_time;  
+        $.ajax({  
+            url : url+"../config/config_demo.json",  
+            datatype: "json",        
+            async : false,  
+            data :{},  
+            success : function(result) {  
+                stat_time=result;  
+            }  
+         });
+        document.getElementById("demo").innerHTML = stat_time;
+        console.log(JSON.stringify(stat_time));  
+    </script>
+    -->
+    <script>
+        var inputElement = document.getElementById("files");
+        inputElement.addEventListener("change", handleFiles, false);
+        
+        function createTable(result){
+            var rows = eval(result);
+            var tableStr = '<table><tr>';
+            var object = rows[0];
+            for(var i in object)
+                tableStr += '<th>' + i + '</th>';
+            tableStr += '</tr>';
+            for(var i = 0; i < rows.length; i++){
+                tableStr += '<tr>';
+                for(var columnName in rows[i])
+                    tableStr += '<td>' + rows[i][columnName] + '</td>';
+                tableStr += '</tr>';
+            }
+            tableStr += '</table>';
+            console.log(tableStr);
+            $("#demo").html(tableStr);
+            return tableStr;
+        }
+
+        function handleFiles() {
+            var selectedFile = document.getElementById("files").files[0];//get file object
+            var name = selectedFile.name;//read chosed file name
+            var size = selectedFile.size;//read file siez
+            console.log("FILE NAME:"+name+"SIZE："+size);
+            //alert(name+","+size);
+            var reader = new FileReader();//Import Core option！Done read action
+            reader.readAsText(selectedFile);//read 
+            reader.onload = function(){
+                console.log("RESULTS：", this.result);//when read finished, the txt will be stored in this.result
+                alert(this.result);
+                createTable(this.result);
+                console.log("RESULTS TO JSON：");
+                let json = JSON.parse(this.result);
+                console.log(json);
+            };
+
+        }
+    </script>
+    <!--
+        AJAX using http protocal，local file is just in local，they're different domain. 
+        Please put proj in a server to resolve this problem
+    <script>
+        $.getJSON("../config/config_demo.json",function(result){
+            console.log(result);
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("button").click(function(){
+                $.getJSON("../config/config_demo.json",function(result){
+                    $.each(result, function(i, field){
+                        $("div").append(field + " ");
+                    });
+                });
+            });
+        });
+    </script>
+    <script>
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                myArr = JSON.parse(this.responseText);
+                document.getElementById("demo").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "../config/config_demo.json", true);
+        xmlhttp.send();
+    </script>
+    -->
+</body>
+</html>

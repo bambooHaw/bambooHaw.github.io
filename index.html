@@ -1,30 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Linux & Mr.Hao</title>
+    <meta charset="utf-8">
+    <title>Home</title>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="./css/common.css" rel="stylesheet">
 </head>
 <body>
-<div id="header"></div>
-<!--page1-->
-<page class="page1">
-    <div class="table_cell wow fadeInUp" data-wow-delay=".2s">
-            <ul class="footer">
-                <li><h3>你好</h3>
-                    <p>不忘初心，方得始终</p></li>
-                <li><h3>相关链接</h3>
-                    <ul class="all_link">
-                        <li><a href="./html/INTRODUCTION.html"><i class="fa fa-files-o"></i>介绍</a></li>
-                        <li><a href="./html/contents.html"><i class="fa fa-book"></i>目录</a></li>
-                    </ul>
-                </li>
-                <li><h3>联系我</h3>
-                    <ul id="contact">
-                        <li><i class="fa fa-map"></i>Address: ShangHai</li>
-                    </ul>
-                </li>
-            </ul>
+    <div class="container">
+        <div class="row">
+            <!--row[0]column[0] start-->
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card" onclick="window.open('main.html');">
+                <img class="card-img-top" src="./image/logo.png" alt="">
+                <div class="card-body text-right">
+                    <p class="card-subtitle text-left">2019</p>
+                    <h4 class="card-title text-left">文本V1.0</h4>
+                    <p class="card-text text-left">纯文件</p>
+                    <button href="" class="btn btn-sm btn-outline-dark">More</button>
+                </div>
+            </div>
+            </div>
+            <!--end-->
+            <!--row[0]column[1] start-->
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card" onclick="window.open('./html/drag_file.html');">
+                <img class="card-img-top" src="./image/logo.png" alt="">
+                <div class="card-body text-right">
+                    <p class="card-subtitle text-left">2019</p>
+                    <h4 class="card-title text-left">拖拽V1.0</h4>
+                    <p class="card-text text-left">文件拖拽</p>
+                    <button href="" class="btn btn-sm btn-outline-dark">More</button>
+                </div>
+            </div>
+            </div>
+            <!--end-->
+            <!--row[0]column[2] start-->
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card" onclick="window.open('./html/bootstrap_table_json.html');">
+                <img class="card-img-top" src="./image/logo.png" alt="">
+                <div class="card-body text-right">
+                    <p class="card-subtitle text-left">2019</p>
+                    <h4 class="card-title text-left">表格V1.0</h4>
+                    <p class="card-text text-left">Json表格</p>
+                    <button href="" class="btn btn-sm btn-outline-dark">More</button>
+                </div>
+            </div>
+            </div>
+            <!--end-->
+        </div>
     </div>
-</page>
 </body>
 </html>

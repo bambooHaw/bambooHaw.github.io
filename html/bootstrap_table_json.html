@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Dashboard | Nadhif - Responsive Admin Template</title>
+        <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap-table/1.15.4/bootstrap-table.min.css">
+        <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+        <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+        <!--
+            https://bootstrap-table.com/docs/api/table-options/
+            <script src="https://cdn.bootcss.com/bootstrap-table/1.15.4/locale/bootstrap-table-zh-CN.min.js"></script>
+        -->
+        <script src="https://cdn.bootcss.com/bootstrap-table/1.15.4/bootstrap-table.min.js"></script>
+
+        <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/fontawesome.css" rel="stylesheet">
+        <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/brands.css" rel="stylesheet">
+        <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/solid.css" rel="stylesheet">
+
+        <style>
+            /*
+            i.fas, i.fab {
+                border: 1px solid black;
+            }
+            */
+            .fa-times {
+                color: red;
+            }
+            .fa-check {
+                color: green;
+            }
+        </style>
+        
+    </head>
+    <body>
+        <!--
+        <a href="javascript:;"  id="remove"><span class="hidden-480">Delete Menu Item</span></a>
+        -->
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table id="menu_table" class="table table-hover"></table>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $('#menu_table').bootstrapTable({
+                method: 'get',
+                url: "../data/config_demo.json",    // request URL
+                striped: true,                      // display interval line color or not
+                pageNumber: 1,                      // init first page for loading 
+                pagination: true,                   // display split page or not
+                sidePagination: 'client',           // server: split page in server| client: split page in client
+                pageSize: 5,                        // recoder pages in a singal page
+                pageList: [5, 10, 20, 50, 100],
+                showRefresh : true,                 // display a refresh button or not
+                columns: [{
+                    title: "",
+                    field: "check", 
+                    align: "center", 
+                    checkbox: true,
+                    formatter: stateFormatter
+                },{
+                    title: 'ID',
+                    field: 'id',
+                    align: "center", 
+                    visable: true
+                },{
+                    title: 'Menu',
+                    field: 'menu', 
+                    align: "center"
+                },{
+                    title: 'Command',
+                    field: 'cmd',
+                    align: "left", 
+                    cellStyle: formatTableUnit,
+                    formatter: paramsMatter
+                },{
+                    title: 'Test Start Time',
+                    field: 'time-start-reality',
+                    align: "center", 
+                    formatter: formatTime
+                }, {
+                    title: 'App Status',
+                    field: 'status',
+                    align: "center", 
+                    formatter: formatIsLeave
+                }]
+            })
+
+            // for checkbox 
+            function stateFormatter(value, row, index) {
+                return (value)?{
+                    disabled : true,    //checkbox visable or not
+                    checked : true      //checkbox choosed or not
+                }:{
+                    disabled : true,  
+                    checked : false,
+                };
+            }
+
+            //msg will be displayed when mouse hang over it
+            function paramsMatter(value, row, index) {
+                //var html = "";
+                //html += '<button onclick="updDevice()">Edit</button>'
+                var span = document.createElement("span");
+                span.setAttribute("title", value);
+                span.innerHTML = value;
+                //return html+" "+span.outerHTML;
+                return span.outerHTML;
+            }
+            //msg will be hided when exceed the width of the sheet 
+            function formatTableUnit(value, row, index) {
+                return {
+                    css: {
+                        "white-space": "nowrap",
+                        "text-overflow": "ellipsis",
+                        "overflow": "hidden",
+                        "max-width": "60px"
+                    }
+                }
+            }
+
+            function formatIsLeave(value, row, index) {
+                return value == 1 ? "<i class='fas fa-times fa-lg'></i>" : "<i class='fas fa-check'></i>";
+            }
+
+            function formatTime(value, row, index) {
+                var date = new Date();
+                date.setTime(value);
+                var month = date.getMonth() + 1;
+                var hours = date.getHours();
+                if(hours < 10)
+                    hours = "0" + hours;
+                var minutes = date.getMinutes();
+                if(minutes < 10)
+                    minutes = "0" + minutes;
+                var time = date.getFullYear() + "-" + month + "-" + date.getDate() +
+                    " " + hours + ":" + minutes;
+                return time;
+            }
+
+            /*
+            // delete event
+            $("#remove").on("click", function() {
+
+                if(!confirm("Delete, Are you share？"))
+                    return;
+                var rows = $("#menu_table").bootstrapTable('getSelections'); // get the data which will be delete
+                if(rows.length == 0) { // rows to check if it's there
+                    alert("Please chose the info to delete at first!");
+                    return;
+                } else {
+                    var ids = new Array(); 
+                    $(rows).each(function() { 
+                        ids.push(this.id); // get a collumn
+                    });
+
+                    deleteMs(ids)
+                }
+
+            })
+
+            function deleteMs(ids) {
+                $.ajax({
+                    url: basePath + "/caller/dels?ids=" + ids,
+                    dataType: "json",
+                    type: "get",
+                    success: function(data) {
+                        if(data > 0) {
+                            msg(6, "Exec success")
+                            $('#menu_table').bootstrapTable('refresh', {
+                                url: basePath + '/caller/list'
+                            });
+                        }
+                    }
+                });
+            }
+            */
+            function updDevice() {
+                alert("Null Edit")
+            }
+        </script>
+        <style>
+            /*table title background color*/
+            #menu_table  thead{
+                background: #5488c4;
+            }
+
+            /*this make a diff color between two table lines*/
+            #menu_table tr:nth-child(even){
+                background:#f4f8fb;
+            }
+        </style>
+    </body>
+
+</html>
