@@ -16,20 +16,6 @@
         <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/fontawesome.css" rel="stylesheet">
         <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/brands.css" rel="stylesheet">
         <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/solid.css" rel="stylesheet">
-
-        <style>
-            /*
-            i.fas, i.fab {
-                border: 1px solid black;
-            }
-            */
-            .fa-times {
-                color: red;
-            }
-            .fa-check {
-                color: green;
-            }
-        </style>
         
     </head>
     <body>
@@ -45,142 +31,213 @@
         </div>
 
         <script>
-            $('#menu_table').bootstrapTable({
-                method: 'get',
-                url: "../data/config_demo.json",    // request URL
-                striped: true,                      // display interval line color or not
-                pageNumber: 1,                      // init first page for loading 
-                pagination: true,                   // display split page or not
-                sidePagination: 'client',           // server: split page in server| client: split page in client
-                pageSize: 5,                        // recoder pages in a singal page
-                pageList: [5, 10, 20, 50, 100],
-                showRefresh : true,                 // display a refresh button or not
-                columns: [{
-                    title: "",
-                    field: "check", 
-                    align: "center", 
-                    checkbox: true,
-                    formatter: stateFormatter
-                },{
-                    title: 'ID',
-                    field: 'id',
-                    align: "center", 
-                    visable: true
-                },{
-                    title: 'Menu',
-                    field: 'menu', 
-                    align: "center"
-                },{
-                    title: 'Command',
-                    field: 'cmd',
-                    align: "left", 
-                    cellStyle: formatTableUnit,
-                    formatter: paramsMatter
-                },{
-                    title: 'Test Start Time',
-                    field: 'time-start-reality',
-                    align: "center", 
-                    formatter: formatTime
-                }, {
-                    title: 'App Status',
-                    field: 'status',
-                    align: "center", 
-                    formatter: formatIsLeave
-                }]
-            })
+            /*About bootstrapTable formatter: function(value row index)
+                formatter: belongs to a column args of bootstrapTable, a function，which has 3 args: value，row, index
 
-            // for checkbox 
-            function stateFormatter(value, row, index) {
-                return (value)?{
-                    disabled : true,    //checkbox visable or not
-                    checked : true      //checkbox choosed or not
-                }:{
-                    disabled : true,  
-                    checked : false,
+                value：stands current cell value
+                row：stands current row
+                index：stands current index
+
+                return string will be displayed in the current cell.
+            */
+            function init_json_table(){            
+                var table_data = {
+                    method: 'get',
+                    url: "../data/config_demo.json",    // request URL
+                    icons:{
+                        paginationSwitchDown: 'fas fa-caret-square-down',
+                        paginationSwitchUp: 'fas fa-caret-square-up',
+                        refresh: 'fas fa-sync',
+                        toggleOff: 'fas fa-toggle-off',
+                        toggleOn: 'fas fa-toggle-on',
+                        columns: 'fas fa-th-list',
+                        fullscreen: 'fas fa-arrows-alt',
+                        detailOpen: 'fas fa-plus',
+                        detailClose: 'fas fa-minus'
+                    },
+                    search: true,
+                    cache: false,
+                    striped: true,                      // display interval line color or not                  
+                    pagination: true,                   // display split page or not
+                    sidePagination: 'client',           // server: split page in server| client: split page in client
+                    pageNumber: 1,                      // init first page for loading
+                    pageSize: 5,                        // recoder pages in a singal page
+                    pageList: [5, 10, 20, 50, 100],
+                    showFooter: true,
+                    showRefresh : true,                 // display a refresh button or not
+                    showToggle: true,
+                    showColumns: true,
+                    showPaginationSwitch: true,
+                    showFullscreen: true,
+                    columns: [{
+                        title: "",
+                        field: "check", 
+                        align: "center", 
+                        checkbox: true,
+                        formatter: stateFormatter
+                    },{
+                        title: 'ID',
+                        field: 'id',
+                        align: "center", 
+                        visable: true
+                    },{
+                        title: 'Menu',
+                        field: 'menu', 
+                        align: "center"
+                    },{
+                        title: 'Command',
+                        field: 'cmd',
+                        align: "left", 
+                        cellStyle: formatTableUnit,
+                        formatter: paramsMatter
+                    },{
+                        title: 'Test Start Time',
+                        field: 'time-start-reality',
+                        align: "center", 
+                        formatter: formatTime
+                    }, {
+                        title: 'App Status',
+                        field: 'status',
+                        align: "center", 
+                        formatter: display_status
+                    }]
                 };
-            }
 
-            //msg will be displayed when mouse hang over it
-            function paramsMatter(value, row, index) {
-                //var html = "";
-                //html += '<button onclick="updDevice()">Edit</button>'
-                var span = document.createElement("span");
-                span.setAttribute("title", value);
-                span.innerHTML = value;
-                //return html+" "+span.outerHTML;
-                return span.outerHTML;
-            }
-            //msg will be hided when exceed the width of the sheet 
-            function formatTableUnit(value, row, index) {
-                return {
-                    css: {
-                        "white-space": "nowrap",
-                        "text-overflow": "ellipsis",
-                        "overflow": "hidden",
-                        "max-width": "60px"
-                    }
-                }
-            }
-
-            function formatIsLeave(value, row, index) {
-                return value == 1 ? "<i class='fas fa-times fa-lg'></i>" : "<i class='fas fa-check'></i>";
-            }
-
-            function formatTime(value, row, index) {
-                var date = new Date();
-                date.setTime(value);
-                var month = date.getMonth() + 1;
-                var hours = date.getHours();
-                if(hours < 10)
-                    hours = "0" + hours;
-                var minutes = date.getMinutes();
-                if(minutes < 10)
-                    minutes = "0" + minutes;
-                var time = date.getFullYear() + "-" + month + "-" + date.getDate() +
-                    " " + hours + ":" + minutes;
-                return time;
-            }
-
-            /*
-            // delete event
-            $("#remove").on("click", function() {
-
-                if(!confirm("Delete, Are you share？"))
-                    return;
-                var rows = $("#menu_table").bootstrapTable('getSelections'); // get the data which will be delete
-                if(rows.length == 0) { // rows to check if it's there
-                    alert("Please chose the info to delete at first!");
-                    return;
-                } else {
-                    var ids = new Array(); 
-                    $(rows).each(function() { 
-                        ids.push(this.id); // get a collumn
-                    });
-
-                    deleteMs(ids)
+                // for checkbox 
+                function stateFormatter(value, row, index) {
+                    return (value)?{
+                        disabled : true,    //checkbox visable or not
+                        checked : true      //checkbox choosed or not
+                    }:{
+                        disabled : true,  
+                        checked : false,
+                    };
                 }
 
-            })
-
-            function deleteMs(ids) {
-                $.ajax({
-                    url: basePath + "/caller/dels?ids=" + ids,
-                    dataType: "json",
-                    type: "get",
-                    success: function(data) {
-                        if(data > 0) {
-                            msg(6, "Exec success")
-                            $('#menu_table').bootstrapTable('refresh', {
-                                url: basePath + '/caller/list'
-                            });
+                //msg will be displayed when mouse hang over it
+                function paramsMatter(value, row, index) {
+                    //var html = "";
+                    //html += '<button onclick="updDevice()">Edit</button>'
+                    var span = document.createElement("span");
+                    span.setAttribute("title", value);
+                    span.innerHTML = value;
+                    //return html+" "+span.outerHTML;
+                    return span.outerHTML;
+                }
+                //msg will be hided when exceed the width of the sheet 
+                function formatTableUnit(value, row, index) {
+                    return {
+                        css: {
+                            "white-space": "nowrap",
+                            "text-overflow": "ellipsis",
+                            "overflow": "hidden",
+                            "max-width": "60px"
                         }
                     }
-                });
-            }
-            */
-            function updDevice() {
-                alert("Null Edit")
-            }
+                }
+
+                function display_status(value, row, index) {
+                    //status_enum_t  ste;
+                    icon = ""
+                    if(row.check){
+                        switch(value){
+                            //failed
+                            case 1:{
+                                icon = "<i class='fas fa-times fa-lg'></i>";
+                                break;
+                            }
+                            //pass
+                            case 0:{
+                                icon = "<i class='fas fa-check fa-mg'></i>";
+                                break;
+                            }
+                            default:{
+                                icon = "<i class='fas fa-question fa-mg'></i>";
+                                break;
+                            }
+                        }
+                    }else{
+                        icon = "<i class='fas fa-lock fa-mg'></i>";
+                    }
+                    
+                    
+                    return icon;
+                }
+
+                function formatTime(value, row, index) {
+                    var date = new Date();
+                    date.setTime(value);
+                    var month = date.getMonth() + 1;
+                    var hours = date.getHours();
+                    if(hours < 10)
+                        hours = "0" + hours;
+                    var minutes = date.getMinutes();
+                    if(minutes < 10)
+                        minutes = "0" + minutes;
+                    var time = date.getFullYear() + "-" + month + "-" + date.getDate() +
+                        " " + hours + ":" + minutes;
+                    return time;
+                }
+
+                /*
+                // delete event
+                $("#remove").on("click", function() {
+
+                    if(!confirm("Delete, Are you share？"))
+                        return;
+                    var rows = $("#menu_table").bootstrapTable('getSelections'); // get the data which will be delete
+                    if(rows.length == 0) { // rows to check if it's there
+                        alert("Please chose the info to delete at first!");
+                        return;
+                    } else {
+                        var ids = new Array(); 
+                        $(rows).each(function() { 
+                            ids.push(this.id); // get a collumn
+                        });
+
+                        deleteMs(ids)
+                    }
+
+                })
+
+                function deleteMs(ids) {
+                    $.ajax({
+                        url: basePath + "/caller/dels?ids=" + ids,
+                        dataType: "json",
+                        type: "get",
+                        success: function(data) {
+                            if(data > 0) {
+                                msg(6, "Exec success")
+                                $('#menu_table').bootstrapTable('refresh', {
+                                    url: basePath + '/caller/list'
+                                });
+                            }
+                        }
+                    });
+                }
+                */
+                function updDevice() {
+                    alert("Null Edit")
+                }
+
+                $("#menu_table").bootstrapTable('destroy'); 
+                $('#menu_table').bootstrapTable(table_data);
+            };
+
+            init_json_table();
+
+            //any click event will  refresh bootstapTable
+            $("*").click(function (){
+                var opt = {
+                    url: "../data/config_demo.json",
+                    silent: true,
+                    query:{
+                        type:1,
+                        level:2
+                    }
+                };
+                $("#menu_table").bootstrapTable('refresh', opt);
+            });
         </script>
         <style>
             /*table title background color*/
@@ -191,6 +248,26 @@
             /*this make a diff color between two table lines*/
             #menu_table tr:nth-child(even){
                 background:#f4f8fb;
+            }
+        </style>
+        <style>
+            /*
+            i.fas, i.fab {
+                border: 1px solid black;
+            }
+            */
+            
+            .fa-times{
+                color: red;
+            }
+            .fa-question{
+                color: red;
+            }
+            .fa-check {
+                color: green;
+            }
+            .fa-lock{
+                color: gray;
             }
         </style>
     </body>
