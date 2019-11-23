@@ -226,10 +226,8 @@
                 $('#menu_table').bootstrapTable(table_data);
                 $('#menu_table').bootstrapTable('refresh');
 
+                //'refresh' after event "page-change.bs.table"
                 $('#menu_table').on('all.bs.table', function (e, row, element){
-                    console.log("e:", e);
-                    console.log("row:", row);
-                    console.log("element:", element);
                     if(row == "page-change.bs.table"){
                         $('#menu_table').bootstrapTable('refresh');
                     }
@@ -237,21 +235,7 @@
             };
 
             init_json_table();
-
-            /*
-            //any click event will  refresh bootstapTable
-            $("*").click(function (){
-                var opt = {
-                    url: "../data/config_demo.json",
-                    silent: true,
-                    query:{
-                        type:1,
-                        level:2
-                    }
-                };
-                $("#menu_table").bootstrapTable('refresh', opt);
-            });
-            */
+            
         </script>
         <style>
             /*table title background color*/
