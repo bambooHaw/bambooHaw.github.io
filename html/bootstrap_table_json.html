@@ -227,8 +227,11 @@
                 $('#menu_table').bootstrapTable('refresh');
 
                 $('#menu_table').on('all.bs.table', function (e, row, element){
-                    console.log(e, row, element);
-                    $('#menu_table').bootstrapTable('refresh');
+                    console.log("e:", e);
+                    console.log("row:", row);
+                    console.log("element:", element);
+                    //if(e.namespace != "refresh.bs.table")
+                    //    $('#menu_table').bootstrapTable('refresh');
                 });
             };
 
