@@ -226,7 +226,7 @@
                 $('#menu_table').bootstrapTable(table_data);
                 $('#menu_table').bootstrapTable('refresh');
 
-                $('#menu_table').on('click-all.bs.table', function (e, row, element){
+                $('#menu_table').on('all.bs.table', function (e, row, element){
                     console.log(e, row, element);
                 });
             };
