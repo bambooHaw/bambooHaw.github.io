@@ -230,8 +230,9 @@
                     console.log("e:", e);
                     console.log("row:", row);
                     console.log("element:", element);
-                    //if(e.namespace != "refresh.bs.table")
-                    //    $('#menu_table').bootstrapTable('refresh');
+                    if(row == "page-change.bs.table"){
+                        $('#menu_table').bootstrapTable('refresh');
+                    }
                 });
             };
 
