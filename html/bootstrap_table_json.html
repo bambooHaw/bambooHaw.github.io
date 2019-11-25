@@ -9,6 +9,11 @@
         
         <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap-table/1.15.4/bootstrap-table.min.css">
         <script src="https://cdn.bootcss.com/bootstrap-table/1.15.4/bootstrap-table.min.js"></script>
+
+        
+        <script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
+        <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/extensions/export/bootstrap-table-export.min.js"></script>
+
         <!--
             https://bootstrap-table.com/docs/api/table-options/
             <script src="https://cdn.bootcss.com/bootstrap-table/1.15.4/locale/bootstrap-table-zh-CN.min.js"></script>
@@ -65,6 +70,7 @@
                     pageNumber: 1,                      // init first page for loading
                     pageSize: 5,                        // recoder pages in a singal page
                     pageList: [5, 10, 20, 50, 100],
+                    showExport: true,
                     showFooter: true,
                     showRefresh : true,                 // display a refresh button or not
                     showToggle: true,
