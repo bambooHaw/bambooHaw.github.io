@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Dashboard | Nadhif - Responsive Admin Template</title>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap-table/1.15.4/bootstrap-table.min.css">
+    <script src="https://cdn.bootcss.com/bootstrap-table/1.15.4/bootstrap-table.min.js"></script>
+
+
+    <script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/extensions/export/bootstrap-table-export.min.js"></script>
+
+    <!--
+        https://bootstrap-table.com/docs/api/table-options/
+        <script src="https://cdn.bootcss.com/bootstrap-table/1.15.4/locale/bootstrap-table-zh-CN.min.js"></script>
+    -->
+
+    <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/fontawesome.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/brands.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/solid.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!--main content start-->
+    <section id="main-content" class="wrapper">
+        <div class="container" id="chartjs">
+            <div class="row">
+                <!-- card start-->
+                <div class="col-md-12 col-lg-4">
+                    <div class="card">
+                        <canvas id="doughnut" height="300rem" width="350rem"></canvas>
+                    </div>
+                </div>
+                <!-- card end-->
+                <!-- card start-->
+                <div class="col-md-12 col-lg-4">
+                    <div class="card">
+                        <canvas id="line" height="300rem" width="350rem"></canvas>
+                    </div>
+                </div>
+                <!-- card end-->
+                <!-- card start-->
+                <div class="col-md-12 col-lg-4">
+                    <div class="card">
+                        <canvas id="radar" height="300rem" width="350rem"></canvas>
+                    </div>
+                </div>
+                <!-- card end-->
+                <!-- card start-->
+                <div class="col-md-12 col-lg-4">
+                    <div class="card">
+                        <canvas id="polarArea" height="300rem" width="350rem"></canvas>
+                    </div>
+                </div>
+                <!-- card end-->
+                <!-- card start-->
+                <div class="col-md-12 col-lg-4">
+                    <div class="card">
+                        <canvas id="bar" height="300rem" width="350rem"></canvas>
+                    </div>
+                </div>
+                <!-- card end-->
+                <!-- card start-->
+                <div class="col-md-12 col-lg-4">
+                    <div class="card">
+                        <canvas id="pie" height="300rem" width="350rem"></canvas>
+                    </div>
+                </div>
+                <!-- card end-->
+            </div>
+        </div>
+    </section>
+    <!--main content end-->
+    
+    <!-- js placed at the end of the document so the pages load faster -->
+    <!--script for this page-->
+    <link href="../css/common.css" rel="stylesheet">
+
+    <script src="../js/Chart.js"></script>
+    <script src="../js/chartjs-conf.js"></script>
+</body>
+</html>
